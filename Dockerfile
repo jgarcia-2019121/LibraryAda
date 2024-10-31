@@ -22,7 +22,7 @@ COPY src ./src
 RUN ./mvnw clean package -DskipTests
 
 # Copia el archivo .jar generado en el contenedor
-COPY target/biblioteca-0.0.1-SNAPSHOT.jar app.jar
+RUN mv target/*.jar app.jar
 
 # Exponer el puerto en el que correrá la aplicación
 EXPOSE 8080
