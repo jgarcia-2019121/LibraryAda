@@ -2,11 +2,11 @@ FROM openjdk:21-jdk
 
 WORKDIR /app
 
-# Copia el wrapper de Maven y dale permisos de ejecución
+# Copia el archivo mvnw y dale permisos de ejecución
 COPY mvnw .
 RUN chmod +x mvnw
 
-# Copia el proyecto y ejecuta Maven
+# Copia todo el proyecto y ejecuta Maven
 COPY . .
 RUN ./mvnw clean package -DskipTests
 
