@@ -1,16 +1,15 @@
-FROM openjdk:21-jdk
+# Usa una imagen base de Java 21 para compilación
+FROM openjdk:21-jdk AS build
 WORKDIR /app
-
-# Copia todos los archivos del proyecto al contenedor
 COPY . .
-
-# Ejecuta Maven para construir el proyecto dentro del contenedor y saltar las pruebas
 RUN ./mvnw clean package -DskipTests
 
-# Copia el archivo .jar generado
-COPY target/biblioteca-0.0.1-SNAPSHOT.jar app.jar
+# Usa otra imagen de Java 21 para el contenedor final
+FROM openjdk:21-jdk
+WORKDIR /app
+COPY --from=build /app/target/biblioteca-0.0.1-SNAPSHOT.jar app.jar
 
-# Expone el puerto en el que correrá la aplicación
+# Exponer el puerto de la aplicación
 EXPOSE 8080
 
 # Comando para ejecutar la aplicación
