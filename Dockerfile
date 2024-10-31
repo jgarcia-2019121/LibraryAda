@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copia el archivo mvnw y dale permisos de ejecución
 COPY mvnw .
-RUN chmod +x mvnw
+RUN chmod +x ./mvnw
 
 # Copia el resto del proyecto en el contenedor
 COPY . .
