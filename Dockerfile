@@ -6,8 +6,10 @@ WORKDIR /app
 COPY mvnw .
 RUN chmod +x mvnw
 
-# Copia todo el proyecto y ejecuta Maven
+# Copia el resto del proyecto en el contenedor
 COPY . .
+
+# Ejecuta Maven para compilar el proyecto
 RUN ./mvnw clean package -DskipTests
 
 EXPOSE 8080
