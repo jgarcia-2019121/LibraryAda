@@ -4,12 +4,18 @@ FROM openjdk:21-jdk
 # Establece el directorio de trabajo
 WORKDIR /app
 
-# Copia el archivo mvnw y dale permisos de ejecución
+# Copia los archivos de Maven Wrapper y pom.xml para instalar dependencias
 COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Dale permisos de ejecución a mvnw
 RUN chmod +x ./mvnw
 
-# Copia el archivo pom.xml y la carpeta src al contenedor
-COPY pom.xml .
+# Ejecuta Maven para descargar dependencias sin compilar
+RUN ./mvnw dependency:resolve
+
+# Copia el código fuente del proyecto
 COPY src ./src
 
 # Ejecuta Maven para compilar el proyecto y generar el .jar
